@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.swingz.mapper.TUserWalletMapper">
+  <resultMap id="BaseResultMap" type="cn.swingz.entity.TUserWallet">
+    <id column="tuw_id" jdbcType="BIGINT" property="tuwId" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="user_amount" jdbcType="DECIMAL" property="userAmount" />
+    <result column="user_fzamount" jdbcType="DECIMAL" property="userFzamount" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    tuw_id, user_id, user_amount, user_fzamount
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_user_wallet
+    where tuw_id = #{tuwId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_user_wallet
+    where tuw_id = #{tuwId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="cn.swingz.entity.TUserWallet">
+    insert into t_user_wallet (tuw_id, user_id, user_amount, 
+      user_fzamount)
+    values (#{tuwId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{userAmount,jdbcType=DECIMAL}, 
+      #{userFzamount,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.swingz.entity.TUserWallet">
+    insert into t_user_wallet
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="tuwId != null">
+        tuw_id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="userAmount != null">
+        user_amount,
+      </if>
+      <if test="userFzamount != null">
+        user_fzamount,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="tuwId != null">
+        #{tuwId,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="userAmount != null">
+        #{userAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="userFzamount != null">
+        #{userFzamount,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.swingz.entity.TUserWallet">
+    update t_user_wallet
+    <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="userAmount != null">
+        user_amount = #{userAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="userFzamount != null">
+        user_fzamount = #{userFzamount,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where tuw_id = #{tuwId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.swingz.entity.TUserWallet">
+    update t_user_wallet
+    set user_id = #{userId,jdbcType=BIGINT},
+      user_amount = #{userAmount,jdbcType=DECIMAL},
+      user_fzamount = #{userFzamount,jdbcType=DECIMAL}
+    where tuw_id = #{tuwId,jdbcType=BIGINT}
+  </update>
+</mapper>

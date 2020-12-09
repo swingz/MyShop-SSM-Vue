@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.swingz.mapper.TOrderinfoMapper">
+  <resultMap id="BaseResultMap" type="cn.swingz.entity.TOrderinfo">
+    <id column="toi_id" jdbcType="BIGINT" property="toiId" />
+    <result column="order_id" jdbcType="BIGINT" property="orderId" />
+    <result column="pid" jdbcType="BIGINT" property="pid" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    toi_id, order_id, pid
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_orderinfo
+    where toi_id = #{toiId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_orderinfo
+    where toi_id = #{toiId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" >
+    insert into t_orderinfo (toi_id, order_id, pid
+      )
+    values (#{toiId,jdbcType=BIGINT}, #{orderId,jdbcType=BIGINT}, #{pid,jdbcType=BIGINT}
+      )
+  </insert>
+
+
+  <insert id="insertOrderInfos" parameterType="cn.swingz.entity.TOrderinfo">
+    insert into t_orderinfo (toi_id, order_id, pid
+      )
+    values
+        <foreach collection="list" item="orderinfo" separator=",">
+        (#{orderinfo.toiId,jdbcType=BIGINT}, #{orderinfo.orderId,jdbcType=BIGINT}, #{orderinfo.pid,jdbcType=BIGINT}
+          )
+        </foreach>
+  </insert>
+
+
+  <insert id="insertSelective" parameterType="cn.swingz.entity.TOrderinfo">
+    insert into t_orderinfo
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="toiId != null">
+        toi_id,
+      </if>
+      <if test="orderId != null">
+        order_id,
+      </if>
+      <if test="pid != null">
+        pid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="toiId != null">
+        #{toiId,jdbcType=BIGINT},
+      </if>
+      <if test="orderId != null">
+        #{orderId,jdbcType=BIGINT},
+      </if>
+      <if test="pid != null">
+        #{pid,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.swingz.entity.TOrderinfo">
+    update t_orderinfo
+    <set>
+      <if test="orderId != null">
+        order_id = #{orderId,jdbcType=BIGINT},
+      </if>
+      <if test="pid != null">
+        pid = #{pid,jdbcType=BIGINT},
+      </if>
+    </set>
+    where toi_id = #{toiId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.swingz.entity.TOrderinfo">
+    update t_orderinfo
+    set order_id = #{orderId,jdbcType=BIGINT},
+      pid = #{pid,jdbcType=BIGINT}
+    where toi_id = #{toiId,jdbcType=BIGINT}
+  </update>
+</mapper>

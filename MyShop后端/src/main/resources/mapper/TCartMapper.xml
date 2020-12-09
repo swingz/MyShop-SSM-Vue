@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.swingz.mapper.TCartMapper">
+  <resultMap id="BaseResultMap" type="cn.swingz.entity.TCart">
+    <id column="tc_id" jdbcType="BIGINT" property="tcId" />
+    <result column="cart_id" jdbcType="BIGINT" property="cartId" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="pid" jdbcType="BIGINT" property="pid" />
+    <result column="pcount" jdbcType="BIGINT" property="pcount" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    tc_id, cart_id, user_id, pid, pcount
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_cart
+    where tc_id = #{tcId,jdbcType=BIGINT}
+  </select>
+
+  <select id="selectByUserId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_cart
+    where user_id = #{userId,jdbcType=BIGINT}
+  </select>
+
+  <select id="findCartWithUserIdAndPid" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_cart
+    where user_id = #{userId,jdbcType=BIGINT} and pid = #{pid,jdbcType=BIGINT}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_cart
+    where tc_id = #{tcId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="cn.swingz.entity.TCart">
+    insert into t_cart (tc_id, cart_id, user_id, 
+      pid, pcount)
+    values (#{tcId,jdbcType=BIGINT}, #{cartId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, 
+      #{pid,jdbcType=BIGINT}, #{pcount,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.swingz.entity.TCart">
+    insert into t_cart
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="tcId != null">
+        tc_id,
+      </if>
+      <if test="cartId != null">
+        cart_id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="pid != null">
+        pid,
+      </if>
+      <if test="pcount != null">
+        pcount,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="tcId != null">
+        #{tcId,jdbcType=BIGINT},
+      </if>
+      <if test="cartId != null">
+        #{cartId,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="pid != null">
+        #{pid,jdbcType=BIGINT},
+      </if>
+      <if test="pcount != null">
+        #{pcount,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.swingz.entity.TCart">
+    update t_cart
+    <set>
+      <if test="cartId != null">
+        cart_id = #{cartId,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="pid != null">
+        pid = #{pid,jdbcType=BIGINT},
+      </if>
+      <if test="pcount != null">
+        pcount = #{pcount,jdbcType=BIGINT},
+      </if>
+    </set>
+    where tc_id = #{tcId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.swingz.entity.TCart">
+    update t_cart
+    set cart_id = #{cartId,jdbcType=BIGINT},
+      user_id = #{userId,jdbcType=BIGINT},
+      pid = #{pid,jdbcType=BIGINT},
+      pcount = #{pcount,jdbcType=BIGINT}
+    where tc_id = #{tcId,jdbcType=BIGINT}
+  </update>
+</mapper>

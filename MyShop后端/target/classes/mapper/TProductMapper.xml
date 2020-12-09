@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.swingz.mapper.TProductMapper">
+  <resultMap id="BaseResultMap" type="cn.swingz.entity.TProduct">
+    <id column="tp_id" jdbcType="BIGINT" property="tpId" />
+    <result column="pid" jdbcType="BIGINT" property="pid" />
+    <result column="pname" jdbcType="VARCHAR" property="pname" />
+    <result column="price" jdbcType="DECIMAL" property="price" />
+    <result column="pimg" jdbcType="VARCHAR" property="pimg" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    tp_id, pid, pname, price, pimg
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_product
+    where tp_id = #{tpId,jdbcType=BIGINT}
+  </select>
+
+  <select id="selectByProductKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_product
+    where pid = #{pid,jdbcType=BIGINT}
+  </select>
+
+
+  <select id="selectAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_product
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_product
+    where tp_id = #{tpId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="cn.swingz.entity.TProduct">
+    insert into t_product (tp_id, pid, pname, 
+      price, pimg)
+    values (#{tpId,jdbcType=BIGINT}, #{pid,jdbcType=BIGINT}, #{pname,jdbcType=VARCHAR}, 
+      #{price,jdbcType=DECIMAL}, #{pimg,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.swingz.entity.TProduct">
+    insert into t_product
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="tpId != null">
+        tp_id,
+      </if>
+      <if test="pid != null">
+        pid,
+      </if>
+      <if test="pname != null">
+        pname,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+      <if test="pimg != null">
+        pimg,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="tpId != null">
+        #{tpId,jdbcType=BIGINT},
+      </if>
+      <if test="pid != null">
+        #{pid,jdbcType=BIGINT},
+      </if>
+      <if test="pname != null">
+        #{pname,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="pimg != null">
+        #{pimg,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.swingz.entity.TProduct">
+    update t_product
+    <set>
+      <if test="pid != null">
+        pid = #{pid,jdbcType=BIGINT},
+      </if>
+      <if test="pname != null">
+        pname = #{pname,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="pimg != null">
+        pimg = #{pimg,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where tp_id = #{tpId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.swingz.entity.TProduct">
+    update t_product
+    set pid = #{pid,jdbcType=BIGINT},
+      pname = #{pname,jdbcType=VARCHAR},
+      price = #{price,jdbcType=DECIMAL},
+      pimg = #{pimg,jdbcType=VARCHAR}
+    where tp_id = #{tpId,jdbcType=BIGINT}
+  </update>
+</mapper>

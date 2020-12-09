@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.swingz.mapper.TBusinessMapper">
+  <resultMap id="BaseResultMap" type="cn.swingz.entity.TBusiness">
+    <id column="tbs_id" jdbcType="BIGINT" property="tbsId" />
+    <result column="bis_id" jdbcType="BIGINT" property="bisId" />
+    <result column="bis_name" jdbcType="VARCHAR" property="bisName" />
+    <result column="bis_flag" jdbcType="SMALLINT" property="bisFlag" />
+    <result column="bis_tel" jdbcType="VARCHAR" property="bisTel" />
+    <result column="bis_email" jdbcType="VARCHAR" property="bisEmail" />
+    <result column="bis_addr" jdbcType="VARCHAR" property="bisAddr" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    tbs_id, bis_id, bis_name, bis_flag, bis_tel, bis_email, bis_addr
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_business
+    where tbs_id = #{tbsId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_business
+    where tbs_id = #{tbsId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="cn.swingz.entity.TBusiness">
+    insert into t_business (tbs_id, bis_id, bis_name, 
+      bis_flag, bis_tel, bis_email, 
+      bis_addr)
+    values (#{tbsId,jdbcType=BIGINT}, #{bisId,jdbcType=BIGINT}, #{bisName,jdbcType=VARCHAR}, 
+      #{bisFlag,jdbcType=SMALLINT}, #{bisTel,jdbcType=VARCHAR}, #{bisEmail,jdbcType=VARCHAR}, 
+      #{bisAddr,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.swingz.entity.TBusiness">
+    insert into t_business
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="tbsId != null">
+        tbs_id,
+      </if>
+      <if test="bisId != null">
+        bis_id,
+      </if>
+      <if test="bisName != null">
+        bis_name,
+      </if>
+      <if test="bisFlag != null">
+        bis_flag,
+      </if>
+      <if test="bisTel != null">
+        bis_tel,
+      </if>
+      <if test="bisEmail != null">
+        bis_email,
+      </if>
+      <if test="bisAddr != null">
+        bis_addr,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="tbsId != null">
+        #{tbsId,jdbcType=BIGINT},
+      </if>
+      <if test="bisId != null">
+        #{bisId,jdbcType=BIGINT},
+      </if>
+      <if test="bisName != null">
+        #{bisName,jdbcType=VARCHAR},
+      </if>
+      <if test="bisFlag != null">
+        #{bisFlag,jdbcType=SMALLINT},
+      </if>
+      <if test="bisTel != null">
+        #{bisTel,jdbcType=VARCHAR},
+      </if>
+      <if test="bisEmail != null">
+        #{bisEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="bisAddr != null">
+        #{bisAddr,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.swingz.entity.TBusiness">
+    update t_business
+    <set>
+      <if test="bisId != null">
+        bis_id = #{bisId,jdbcType=BIGINT},
+      </if>
+      <if test="bisName != null">
+        bis_name = #{bisName,jdbcType=VARCHAR},
+      </if>
+      <if test="bisFlag != null">
+        bis_flag = #{bisFlag,jdbcType=SMALLINT},
+      </if>
+      <if test="bisTel != null">
+        bis_tel = #{bisTel,jdbcType=VARCHAR},
+      </if>
+      <if test="bisEmail != null">
+        bis_email = #{bisEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="bisAddr != null">
+        bis_addr = #{bisAddr,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where tbs_id = #{tbsId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.swingz.entity.TBusiness">
+    update t_business
+    set bis_id = #{bisId,jdbcType=BIGINT},
+      bis_name = #{bisName,jdbcType=VARCHAR},
+      bis_flag = #{bisFlag,jdbcType=SMALLINT},
+      bis_tel = #{bisTel,jdbcType=VARCHAR},
+      bis_email = #{bisEmail,jdbcType=VARCHAR},
+      bis_addr = #{bisAddr,jdbcType=VARCHAR}
+    where tbs_id = #{tbsId,jdbcType=BIGINT}
+  </update>
+</mapper>
